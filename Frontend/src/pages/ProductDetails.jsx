@@ -1,12 +1,35 @@
-import React from 'react'
+import {useEffect, useState} from 'react';
+import api from '../api/axios';
+import { useParams } from 'react-router';
 
-const ProductDetails = () => {
+export default function ProductDetails(){
+
+  const {id} = useParams();
+  const [product, setProduct] = useState(null);
+
+  const loadProduct = async () => {
+    const res = await  api.get('/products/')
+    const p = res.data.find((item) => item._id === id)
+    setProduct(p);
+  };
+  useEffect(() => {
+    loadProduct();
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-            <h1>Welcome to the Product details  page</h1>
+    <div className="p-6 max-w-3xl mx-auto">
+      <img src={product.image} alt={product.title} className="w-full h-40 object-contain bg-white rounded" />
+      <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
+      <p className="text-gray-600 mb-4">{product.description}</p>
+      <p className="text-xl font-semibold mt-4">${product.price.toFixed(2)}</p>
 
+      <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+        Add to Cart
+      </button>
     </div>
-  )
+  );
 }
-
-export default ProductDetails

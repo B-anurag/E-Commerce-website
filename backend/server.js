@@ -6,6 +6,8 @@ import { dirname, resolve } from 'path';
 import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import productsRoutes from './routes/productsRoutes.js'
+import cartRoutes from './routes/cart.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/cart', cartRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...')
