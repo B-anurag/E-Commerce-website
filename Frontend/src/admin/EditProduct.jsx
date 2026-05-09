@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import api from '../api/axios'
-import { useNavigate, useParams } from "react-router";
-import { use } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditProduct() {
     const { id } = useParams();
